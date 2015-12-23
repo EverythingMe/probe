@@ -1,0 +1,7 @@
+*.pyc
+.idea
+json_output
+workspace
+env
+probe.log
+mydatabase.db
