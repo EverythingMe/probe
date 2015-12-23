@@ -77,15 +77,15 @@ The actual code which collects the data is written here.
 	       pass
 	
 	   def name(self):
-	   """
-	   the key of this measurement in the output dict 
-	   """
+		   """
+		   the key of this measurement in the output dict 
+		   """
 	       return 'cpu_ticks_user'
 	
 	   def value(self):
-	   """
-	   the value of this measurement in the output dict 
-	   """
+		   """
+		   the value of this measurement in the output dict 
+		   """
 	   		pid = runtime.get_instance().get_pid()
 	   		procstat = adb.get_instance().shell('cat /proc/%s/stat' % pid)['stdout'][0].split()
 	   		return int(procstat[PROC_STAT_USER_TICKS_LOC])    
