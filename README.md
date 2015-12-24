@@ -3,6 +3,47 @@
 Android applications performance testing tool.
 
 
+#Usage
+There are two ways to use probe:
+
+1. As a command line tool. This will run a basic test case of Restart ----> Steady state
+
+	```sh
+	
+	# python console.py --package your.package.name --activity TheActivityToRunProbeOn --repeat-count x --timeout y
+	
+	# python console.py --help
+	
+	Options:
+	  --package TEXT          Package name to run Probe on
+	  --activity TEXT         Activity to restart within that package
+	  --apk-path TEXT         Optional: Path to installed APK, if you want APK analisys
+	  --repeat-count INTEGER  Times to repeat the test
+	  --timeout INTEGER       probe will stop when logcat output is silent for
+	                          that duration
+	  --device-id TEXT        device_id to send commands to
+	```
+
+2. As a python module, as a part of your UI tests start probe at the begining of each test, and stop in when it ends (the following example shows how we did that with [Magneto](https://github.com/MagnetoTesting/magneto), setting up probe inside our `BaseTestCase`
+	
+	```python 
+	from probe.probe import Probe
+	
+	
+	class BaseTestCase(TestCase):
+		probe = None
+			
+		def setup_method(self, method):
+	       super(BaseTestCase, self).setup_method(method)
+	       self.probe = Probe(package, activity, device_id)
+	       probe.start()
+	       
+	   def teardown_method(self, method):
+	   		super(BaseTestCase, self).teardown_method(method)
+	   		self.probe.stop()
+   
+	```
+
 ##Background
 In EverythingMe we used to have "performance blitzs" every now and then, when we (subjectivly) felt EverythingMe's launcher performance is not on par with what we would expect it to be. Then we would start manually measuring the app's vital signs using the following tools: 
 
